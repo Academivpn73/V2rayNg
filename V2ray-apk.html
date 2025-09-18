@@ -5,287 +5,84 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>v2rayNG Auto Downloader — Academi</title>
-  <meta name="description" content="دانلود خودکار v2rayNG و اطلاعات تماس">
+  <meta name="description" content="دانلود آخرین نسخه‌های v2ray برای اندروید، ویندوز، مک و لینوکس">
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--glass:rgba(255,255,255,0.04)}
-    *{box-sizing:border-box;font-family:IRANSans, Tahoma, sans-serif}
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#0284c7;--muted:#94a3b8;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box;font-family:Tahoma, sans-serif}
     html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #07162a 100%);color:#e6eef6}
-    .container{max-width:980px;margin:28px auto;padding:18px}
-    header{display:flex;align-items:center;gap:14px}
-    .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#051025}
-    h1{margin:0;font-size:20px}
-    p.lead{margin:6px 0 12px;color:var(--muted)}
-    .card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.03)}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:14px}
-    .left{min-height:180px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#051025;border:none}
-    .small{font-size:13px;color:var(--muted)}
-    .platforms{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .platform{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
-    .platform.active{outline:3px solid rgba(6,182,212,0.12);box-shadow:0 6px 18px rgba(6,182,212,0.06)}
-    .releases{margin-top:12px;display:flex;flex-direction:column;gap:10px}
-    .release{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
-    .assets{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-    .asset{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(0,0,0,0.18)}
-    .right .contact{display:flex;flex-direction:column;gap:8px}
-    .copy{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
-    footer{margin-top:18px;color:var(--muted);font-size:13px}
-    .hint{font-size:13px;color:var(--muted);margin-top:8px}
-    input.token{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    @media (max-width:880px){.grid{grid-template-columns:1fr;}.logo{width:56px;height:56px}}
+    .container{max-width:980px;margin:0 auto;padding:24px}
+    header{text-align:center;margin-bottom:24px}
+    header h1{margin:8px 0;font-size:22px}
+    header .telegram-top{font-weight:700;font-size:18px;color:var(--accent);cursor:pointer}
+    .card{background:var(--card);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 6px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;margin:6px 0}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#fff;border:none}
+    h3{margin-top:0}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="logo">vD</div>
-      <div>
-        <h1>v2ray Auto Downloader — Academi</h1>
-        <p class="lead">سیستم انتخاب پلتفرم → نمایش همه ریلیزها (از جدید به قدیم) → انتخاب و دانلودِ Asset</p>
-      </div>
-    </header><section class="card" style="margin-top:14px">
-  <div class="grid">
-    <div class="left">
-      <h3>مرحله ۱ — انتخاب دستگاه</h3>
-      <div class="hint">لطفاً دستگاه یا پلتفرم مورد نظر را انتخاب کنید. (اگر نمی‌خواهید، ما تشخیص خودکار انجام می‌دهیم.)</div>
-
-      <div class="platforms" id="platforms">
-        <div class="platform" data-key="android">📱 اندروید</div>
-        <div class="platform" data-key="windows">🖥 ویندوز</div>
-        <div class="platform" data-key="mac">🍎 مک</div>
-        <div class="platform" data-key="linux">🐧 لینوکس</div>
-        <div class="platform" data-key="all">🔀 همه پلتفرم‌ها</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <button class="btn primary" id="confirmPlatform">ادامه — نمایش نسخه‌ها</button>
-        <div class="small" style="margin-top:8px">توجه: حتی اگر دستگاهی انتخاب کنید، کاربر می‌تواند برای هر پلتفرمی دانلود کند؛ انتخاب فقط به پیش‌نمایش و مرتب‌سازی کمک می‌کند.</div>
-      </div>
-
-      <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)">
-
-      <div id="releasesArea">
-        <h3 id="releasesTitle">مرحله ۲ — لیست نسخه‌ها</h3>
-        <div class="small" id="releasesHint">هنوز پلتفرمی انتخاب نشده است.</div>
-        <div class="releases" id="releases"></div>
-      </div>
-
-    </div>
-
-    <aside class="right">
-      <div class="contact card" style="padding:12px">
-        <h4 style="margin:0 0 6px 0">پشتیبانی و لینک ساب</h4>
-        <div style="font-size:14px">Telegram</div>
-        <div style="font-weight:700;margin-top:6px">@Academi_vpn</div>
-        <div class="small" style="margin-top:6px">لینک ساب (خام):</div>
-        <div style="word-break:break-all;margin-top:6px" class="small">https://raw.githubusercontent.com/Academivpn73/V2ray/refs/heads/main/Academi_vpn-Sub</div>
-
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn" onclick="openLink('https://t.me/Academi_vpn')">باز کردن در تلگرام</button>
-          <button class="btn copy" id="copyBtn">کپی آیدی</button>
-        </div>
-
-        <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)">
-
-        <div class="small">در صورتی که GitHub API محدود شده (rate limit)، می‌توانید یک توکن شخصی (Personal Access Token) وارد کنید تا تعداد درخواست‌ها افزایش یابد:</div>
-        <input placeholder="Optional: GitHub token (برای افزایش rate limit)" id="ghToken" class="token" style="margin-top:8px" />
-        <div class="small hint" style="margin-top:8px">توجه: توکن را فقط برای افزایش محدودیت قرار دهید؛ اینجا ذخیره نمی‌شود و فقط در نشست جاری استفاده می‌شود.</div>
-      </div>
-
-      <div class="card" style="padding:12px;margin-top:12px">
-        <div class="small">راهنما</div>
-        <ul class="small" style="margin-top:8px;padding-left:18px">
-          <li>پس از انتخاب پلتفرم، همه ریلیزهای مربوطه از GitHub خوانده می‌شوند.</li>
-          <li>لیست از جدید به قدیم مرتب شده و هر ریلیز شامل Asset های قابل دانلود است.</li>
-          <li>اگر خواستید، می‌توانم فیلتر پیشرفته (مثلاً فقط APK یا فقط EXE) اضافه کنم.</li>
-        </ul>
-      </div>
-    </aside>
+      <div class="telegram-top" onclick="openLink('https://t.me/Academi_vpn')">@Academi_vpn</div>
+      <h1>v2rayNG Auto Downloader</h1>
+      <p class="lead">انتخاب کنید برای کدام دستگاه می‌خواهید نسخه مناسب v2ray را دانلود کنید.</p>
+    </header><section class="card">
+  <h3>انتخاب پلتفرم</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:12px">
+    <button class="btn primary" onclick="loadReleases('android')">📱 اندروید (v2rayNG)</button>
+    <button class="btn" onclick="loadReleases('windows')">🖥️ ویندوز (v2rayN)</button>
+    <button class="btn" onclick="loadReleases('core')">💻 ویندوز / مک / لینوکس (v2ray-core)</button>
   </div>
-
-  <footer>
-    ساخته شده با ♥ — فایل را به نام <code>index.html</code> ذخیره و در ریپازیتوری GitHub قرار دهید تا با GitHub Pages منتشر شود.
-  </footer>
 </section>
 
+<section id="releases" class="card" style="display:none">
+  <h3>لیست نسخه‌ها</h3>
+  <div id="releaseList">در حال بارگذاری...</div>
+</section>
+
+<footer>
+  ساخته شده توسط <span style="font-weight:bold">@MahdiAGM0</span> — این صفحه آخرین نسخه را از صفحه ریلیزهای GitHub دریافت می‌کند.
+</footer>
+
   </div>  <script>
-    // نگاشت پلتفرم به ریپوهای GitHub که می‌خواهیم لیست ریلیزها را از آن‌ها بگیریم
-    const PLATFORM_MAP = {
-      android: { owner: '2dust', repo: 'v2rayNG', name: 'v2rayNG (Android)'},
-      windows: { owner: 'v2fly', repo: 'v2rayN', name: 'v2rayN (Windows GUI)'},
-      mac: { owner: 'v2fly', repo: 'v2ray-core', name: 'v2ray-core (macOS / Linux) '},
-      linux: { owner: 'v2fly', repo: 'v2ray-core', name: 'v2ray-core (Linux) '},
-      all: null
+    function openLink(url){window.open(url, '_blank');}
+
+    const apiMap={
+      android:"https://api.github.com/repos/2dust/v2rayNG/releases",
+      windows:"https://api.github.com/repos/v2fly/v2rayN/releases",
+      core:"https://api.github.com/repos/v2fly/v2ray-core/releases"
     };
 
-    const platformsEl = document.getElementById('platforms');
-    const platformButtons = Array.from(document.querySelectorAll('.platform'));
-    let selectedPlatform = null;
-
-    // تشخیص خودکار دستگاه
-    function detectPlatform(){
-      const ua = navigator.userAgent || '';
-      if(/android/i.test(ua)) return 'android';
-      if(/windows/i.test(ua)) return 'windows';
-      if(/mac os|macintosh|iphone|ipad/i.test(ua)) return 'mac';
-      if(/linux/i.test(ua)) return 'linux';
-      return 'all';
-    }
-
-    // اعمال انتخاب بصری
-    function setActivePlatform(key){
-      selectedPlatform = key;
-      platformButtons.forEach(b=>{
-        b.classList.toggle('active', b.getAttribute('data-key')===key);
-      });
-    }
-
-    platformButtons.forEach(btn=>{
-      btn.addEventListener('click', ()=>setActivePlatform(btn.getAttribute('data-key')));
-    });
-
-    // پیش‌انتخاب بر اساس UA
-    const auto = detectPlatform();
-    setActivePlatform(auto);
-
-    document.getElementById('confirmPlatform').addEventListener('click', ()=>{
-      loadReleasesFor(selectedPlatform);
-    });
-
-    function openLink(url){ try{window.open(url, '_blank')}catch(e){location.href=url} }
-
-    document.getElementById('copyBtn').addEventListener('click', async ()=>{
-      const id='@Academi_vpn';
-      if(navigator.clipboard){
-        try{await navigator.clipboard.writeText(id);alert('آیدی کپی شد: '+id);}catch(e){fallbackCopy(id)}
-      }else fallbackCopy(id);
-    });
-    function fallbackCopy(text){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alert('آیدی کپی شد: '+text)}catch(e){prompt('کپی آیدی اینجا:', text)}ta.remove();}
-
-    // نمایش ریلیزها
-    const releasesEl = document.getElementById('releases');
-    const releasesTitle = document.getElementById('releasesTitle');
-    const releasesHint = document.getElementById('releasesHint');
-
-    async function fetchReleases(owner, repo, token){
-      const headers = { 'Accept': 'application/vnd.github.v3+json' };
-      if(token) headers['Authorization'] = 'token '+token;
-      const url = `https://api.github.com/repos/${owner}/${repo}/releases?per_page=100`;
-      const res = await fetch(url, { headers });
-      if(!res.ok){
-        const text = await res.text();
-        throw new Error('GitHub API error: '+res.status+' — '+text);
-      }
-      const data = await res.json();
-      return data;
-    }
-
-    async function loadReleasesFor(key){
-      releasesEl.innerHTML = '';
-      releasesTitle.textContent = 'در حال بارگذاری...';
-      releasesHint.textContent = '';
-      const token = document.getElementById('ghToken').value.trim() || null;
-
-      // اگر all انتخاب شده، چند ریپو را هم‌زمان بخوان
-      if(key === 'all'){
-        // لیست اصلی: v2rayNG, v2rayN, v2ray-core
-        try{
-          const all = [];
-          const combos = [ {owner:'2dust',repo:'v2rayNG', label:'v2rayNG (Android)'}, {owner:'v2fly',repo:'v2rayN', label:'v2rayN (Windows)'}, {owner:'v2fly',repo:'v2ray-core', label:'v2ray-core'} ];
-          for(const c of combos){
-            releasesTitle.textContent = `بارگذاری ریلیزها — ${c.label}`;
-            const data = await fetchReleases(c.owner, c.repo, token);
-            all.push({label:c.label, owner:c.owner, repo:c.repo, releases:data});
-          }
-          // نمایش
-          releasesTitle.textContent = 'همه ریلیزها';
-          releasesHint.textContent = 'فهرست ترکیبی از چند پروژه. برای دیدن Asset های هر نسخه، از دکمه‌های زیر استفاده کنید.';
-          releasesEl.innerHTML = '';
-          all.forEach(group=>{
-            const header = document.createElement('div');
-            header.className = 'small';
-            header.style.marginTop = '10px';
-            header.textContent = group.label;
-            releasesEl.appendChild(header);
-            group.releases.forEach(r=>{
-              releasesEl.appendChild(renderRelease(r, group.owner, group.repo));
-            });
-          });
-        }catch(err){
-          releasesTitle.textContent = 'خطا در بارگذاری';
-          releasesHint.textContent = err.message;
-        }
-        return;
-      }
-
-      const repoInfo = PLATFORM_MAP[key];
-      if(!repoInfo){ releasesTitle.textContent = 'پلتفرم نامشخص'; releasesHint.textContent = ''; return; }
-      releasesTitle.textContent = `بارگذاری ریلیزهای ${repoInfo.name} ...`;
+    async function loadReleases(platform){
+      document.getElementById('releases').style.display='block';
+      const list=document.getElementById('releaseList');
+      list.innerHTML='در حال بارگذاری...';
       try{
-        const data = await fetchReleases(repoInfo.owner, repoInfo.repo, token);
-        if(!Array.isArray(data) || data.length===0){
-          releasesTitle.textContent = 'هیچ ریلیزی یافت نشد';
-          releasesHint.textContent = 'ممکن است ریلیزی برای این ریپو موجود نباشد یا API محدود شده باشد.';
-          return;
-        }
-        // داده‌ها معمولا از جدید به قدیم آمده‌اند؛ اما مطمئن می‌شویم
-        data.sort((a,b)=> new Date(b.published_at) - new Date(a.published_at));
-        releasesTitle.textContent = `ریلیزهای ${repoInfo.name}`;
-        releasesHint.textContent = `نمایش ${data.length} ریلیز از جدید به قدیم. نسخه‌ها شامل Asset های قابل دانلود هستند.`;
-        releasesEl.innerHTML = '';
-        data.forEach(r=>{
-          releasesEl.appendChild(renderRelease(r, repoInfo.owner, repoInfo.repo));
+        const res=await fetch(apiMap[platform]);
+        if(!res.ok) throw new Error('API Error');
+        const data=await res.json();
+        list.innerHTML='';
+        data.forEach(rel=>{
+          const card=document.createElement('div');
+          card.style.marginBottom='14px';
+          card.innerHTML=`<div style="font-weight:600;margin-bottom:6px">${rel.name||rel.tag_name}</div>`;
+          if(rel.assets&&rel.assets.length>0){
+            rel.assets.forEach(asset=>{
+              const btn=document.createElement('button');
+              btn.className='btn';
+              btn.textContent='⬇️ '+asset.name;
+              btn.onclick=()=>openLink(asset.browser_download_url);
+              card.appendChild(btn);
+            });
+          }else{
+            card.innerHTML+='<div style="color:#94a3b8">فایلی برای دانلود موجود نیست</div>';
+          }
+          list.appendChild(card);
         });
-      }catch(err){
-        releasesTitle.textContent = 'خطا در بارگذاری';
-        releasesHint.textContent = err.message;
+      }catch(e){
+        list.innerHTML='خطا در دریافت اطلاعات از GitHub';
       }
     }
-
-    function renderRelease(release, owner, repo){
-      const box = document.createElement('div');
-      box.className = 'release';
-      const title = document.createElement('div');
-      title.innerHTML = `<strong>${escapeHtml(release.name || release.tag_name)}</strong> <span class="small">— ${new Date(release.published_at).toLocaleString()}</span>`;
-      box.appendChild(title);
-      if(release.body){
-        const desc = document.createElement('div');desc.className='small';desc.style.marginTop='6px';desc.style.whiteSpace='pre-wrap';desc.textContent = (release.body||'').slice(0,400);box.appendChild(desc);
-      }
-      const assetsWrap = document.createElement('div'); assetsWrap.className='assets';
-      if(release.assets && release.assets.length){
-        release.assets.forEach(a=>{
-          const ael = document.createElement('div'); ael.className='asset';
-          const name = document.createElement('div'); name.textContent = a.name;
-          const right = document.createElement('div'); right.style.display='flex'; right.style.gap='8px';
-          const size = document.createElement('div'); size.className='small'; size.textContent = humanFileSize(a.size || 0);
-          const dl = document.createElement('button'); dl.className='btn'; dl.textContent='دانلود';
-          dl.onclick = ()=>{ window.open(a.browser_download_url, '_blank'); };
-          right.appendChild(size); right.appendChild(dl);
-          ael.appendChild(name); ael.appendChild(right);
-          assetsWrap.appendChild(ael);
-        });
-      }else{
-        const none = document.createElement('div'); none.className='small'; none.textContent='این ریلیز Asset قابل دانلود ندارد.'; assetsWrap.appendChild(none);
-      }
-      box.appendChild(assetsWrap);
-
-      // دکمه‌های مفید: view on GitHub
-      const footer = document.createElement('div'); footer.style.marginTop='8px';
-      const ghBtn = document.createElement('button'); ghBtn.className='btn'; ghBtn.textContent='نمایش در GitHub'; ghBtn.onclick = ()=> openLink(release.html_url);
-      footer.appendChild(ghBtn);
-      box.appendChild(footer);
-
-      return box;
-    }
-
-    function humanFileSize(bytes){ const thresh = 1024; if(Math.abs(bytes) < thresh) return bytes + ' B'; const units = ['KB','MB','GB','TB']; let u = -1; do { bytes /= thresh; ++u; } while(Math.abs(bytes) >= thresh && u < units.length - 1); return bytes.toFixed(1)+' '+units[u]; }
-
-    function escapeHtml(s){ return String(s).replace(/[&<>"]+/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-
-    // اگر کاربر خواست سریع آخرین نسخه را ببیند
-    // (but we still follow the user's flow)
-
-    // پایان
   </script></body>
 </html>
