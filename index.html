@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دانلود V2Ray برای همه دستگاه‌ها</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex flex-col">
+
+  <!-- هدر -->
+  <header class="text-center py-8">
+    <h1 class="text-4xl font-extrabold mb-2">دانلود V2Ray</h1>
+    <p class="text-gray-400">انتخاب کن و نسخه مناسب دستگاهت رو دانلود کن 🚀</p>
+  </header>
+
+  <!-- کارت‌ها -->
+  <main class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 max-w-6xl mx-auto">
+
+    <!-- اندروید -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/android-os.png" alt="اندروید">
+      <h2 class="text-2xl font-bold mt-4">اندروید</h2>
+      <p class="text-gray-400 text-sm mt-2">لیست نسخه‌های v2rayNG</p>
+      <button onclick="fetchReleases('android')" 
+              class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full">
+        📋 نمایش نسخه‌ها
+      </button>
+      <div id="android-versions" class="mt-4 text-sm text-gray-300"></div>
+    </div>
+
+    <!-- ویندوز -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/windows-10.png" alt="ویندوز">
+      <h2 class="text-2xl font-bold mt-4">ویندوز</h2>
+      <p class="text-gray-400 text-sm mt-2">لیست نسخه‌های v2rayN</p>
+      <button onclick="fetchReleases('windows')" 
+              class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full">
+        📋 نمایش نسخه‌ها
+      </button>
+      <div id="windows-versions" class="mt-4 text-sm text-gray-300"></div>
+    </div>
+
+    <!-- مک -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/mac-os.png" alt="مک">
+      <h2 class="text-2xl font-bold mt-4">مک</h2>
+      <p class="text-gray-400 text-sm mt-2">لیست نسخه‌های Qv2ray</p>
+      <button onclick="fetchReleases('mac')" 
+              class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full">
+        📋 نمایش نسخه‌ها
+      </button>
+      <div id="mac-versions" class="mt-4 text-sm text-gray-300"></div>
+    </div>
+
+    <!-- آیفون -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/ios-logo.png" alt="iOS">
+      <h2 class="text-2xl font-bold mt-4">آیفون (iOS)</h2>
+      <p class="text-gray-400 text-sm mt-2">دریافت از App Store</p>
+      <a href="https://apps.apple.com/en/app/v2raytun/id6476628951"
+         class="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg w-full text-center">
+        📥 دانلود از App Store
+      </a>
+    </div>
+
+  </main>
+
+  <!-- فوتر -->
+  <footer class="text-center py-6 text-gray-500">
+    ساخته شده توسط <span class="text-blue-400 font-bold">@MahdiAGM0</span>
+  </footer>
+
+  <!-- اسکریپت دریافت نسخه‌ها از GitHub -->
+  <script>
+    async function fetchReleases(device) {
+      let repos = {
+        android: "2dust/v2rayNG",
+        windows: "2dust/v2rayN",
+        mac: "Qv2ray/Qv2ray"
+      };
+
+      if (!repos[device]) return;
+
+      let url = `https://api.github.com/repos/${repos[device]}/releases`;
+      let container = document.getElementById(`${device}-versions`);
+
+      container.innerHTML = "⏳ در حال دریافت نسخه‌ها...";
+
+      try {
+        let res = await fetch(url);
+        let data = await res.json();
+
+        let html = "";
+        data.slice(0, 5).forEach(release => {
+          let version = release.tag_name;
+          if (release.assets.length > 0) {
+            release.assets.forEach(asset => {
+              html += `
+                <div class="bg-gray-700 p-2 my-1 rounded flex justify-between items-center">
+                  <span>${version} - ${asset.name}</span>
+                  <a href="${asset.browser_download_url}" 
+                     class="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-white">
+                    دانلود
+                  </a>
+                </div>`;
+            });
+          } else {
+            html += `<div class="bg-gray-700 p-2 my-1 rounded">⚠️ بدون فایل دانلودی</div>`;
+          }
+        });
+
+        container.innerHTML = html;
+      } catch (e) {
+        container.innerHTML = "❌ خطا در دریافت نسخه‌ها";
+      }
+    }
+  </script>
+
+</body>
+</html>
