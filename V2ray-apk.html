@@ -1,88 +1,72 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>v2rayNG Auto Downloader — Academi</title>
-  <meta name="description" content="دانلود آخرین نسخه‌های v2ray برای اندروید، ویندوز، مک و لینوکس">
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#0284c7;--muted:#94a3b8;--glass:rgba(255,255,255,0.04)}
-    *{box-sizing:border-box;font-family:Tahoma, sans-serif}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #07162a 100%);color:#e6eef6}
-    .container{max-width:980px;margin:0 auto;padding:24px}
-    header{text-align:center;margin-bottom:24px}
-    header h1{margin:8px 0;font-size:22px}
-    header .telegram-top{font-weight:700;font-size:18px;color:var(--accent);cursor:pointer}
-    .card{background:var(--card);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 6px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;margin:6px 0}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),#7c3aed);color:#fff;border:none}
-    h3{margin-top:0}
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دانلود V2Ray برای همه دستگاه‌ها</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <div class="telegram-top" onclick="openLink('https://t.me/Academi_vpn')">@Academi_vpn</div>
-      <h1>v2rayNG Auto Downloader</h1>
-      <p class="lead">انتخاب کنید برای کدام دستگاه می‌خواهید نسخه مناسب v2ray را دانلود کنید.</p>
-    </header><section class="card">
-  <h3>انتخاب پلتفرم</h3>
-  <div style="display:flex;flex-wrap:wrap;gap:12px">
-    <button class="btn primary" onclick="loadReleases('android')">📱 اندروید (v2rayNG)</button>
-    <button class="btn" onclick="loadReleases('windows')">🖥️ ویندوز (v2rayN)</button>
-    <button class="btn" onclick="loadReleases('core')">💻 ویندوز / مک / لینوکس (v2ray-core)</button>
-  </div>
-</section>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex flex-col">
 
-<section id="releases" class="card" style="display:none">
-  <h3>لیست نسخه‌ها</h3>
-  <div id="releaseList">در حال بارگذاری...</div>
-</section>
+  <!-- هدر -->
+  <header class="text-center py-8">
+    <h1 class="text-4xl font-extrabold mb-2">دانلود V2Ray</h1>
+    <p class="text-gray-400">انتخاب کن و نسخه مناسب دستگاهت رو دانلود کن 🚀</p>
+  </header>
 
-<footer>
-  ساخته شده توسط <span style="font-weight:bold">@MahdiAGM0</span> — این صفحه آخرین نسخه را از صفحه ریلیزهای GitHub دریافت می‌کند.
-</footer>
+  <!-- کارت‌ها -->
+  <main class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 max-w-6xl mx-auto">
 
-  </div>  <script>
-    function openLink(url){window.open(url, '_blank');}
+    <!-- اندروید -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/android-os.png" alt="اندروید">
+      <h2 class="text-2xl font-bold mt-4">اندروید</h2>
+      <p class="text-gray-400 text-sm mt-2">دانلود آخرین نسخه v2rayNG برای اندروید</p>
+      <a href="https://github.com/2dust/v2rayNG/releases/latest/download/v2rayNG.apk"
+         class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full text-center">
+        📥 دانلود
+      </a>
+    </div>
 
-    const apiMap={
-      android:"https://api.github.com/repos/2dust/v2rayNG/releases",
-      windows:"https://api.github.com/repos/v2fly/v2rayN/releases",
-      core:"https://api.github.com/repos/v2fly/v2ray-core/releases"
-    };
+    <!-- ویندوز -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/windows-10.png" alt="ویندوز">
+      <h2 class="text-2xl font-bold mt-4">ویندوز</h2>
+      <p class="text-gray-400 text-sm mt-2">دانلود آخرین نسخه v2rayN برای ویندوز</p>
+      <a href="https://github.com/2dust/v2rayN/releases/latest/download/v2rayN.zip"
+         class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full text-center">
+        📥 دانلود
+      </a>
+    </div>
 
-    async function loadReleases(platform){
-      document.getElementById('releases').style.display='block';
-      const list=document.getElementById('releaseList');
-      list.innerHTML='در حال بارگذاری...';
-      try{
-        const res=await fetch(apiMap[platform]);
-        if(!res.ok) throw new Error('API Error');
-        const data=await res.json();
-        list.innerHTML='';
-        data.forEach(rel=>{
-          const card=document.createElement('div');
-          card.style.marginBottom='14px';
-          card.innerHTML=`<div style="font-weight:600;margin-bottom:6px">${rel.name||rel.tag_name}</div>`;
-          if(rel.assets&&rel.assets.length>0){
-            rel.assets.forEach(asset=>{
-              const btn=document.createElement('button');
-              btn.className='btn';
-              btn.textContent='⬇️ '+asset.name;
-              btn.onclick=()=>openLink(asset.browser_download_url);
-              card.appendChild(btn);
-            });
-          }else{
-            card.innerHTML+='<div style="color:#94a3b8">فایلی برای دانلود موجود نیست</div>';
-          }
-          list.appendChild(card);
-        });
-      }catch(e){
-        list.innerHTML='خطا در دریافت اطلاعات از GitHub';
-      }
-    }
-  </script></body>
+    <!-- مک -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/mac-os.png" alt="مک">
+      <h2 class="text-2xl font-bold mt-4">مک</h2>
+      <p class="text-gray-400 text-sm mt-2">دانلود آخرین نسخه Qv2ray برای مک</p>
+      <a href="https://github.com/Qv2ray/Qv2ray/releases/latest/download/Qv2ray.dmg"
+         class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-center">
+        📥 دانلود
+      </a>
+    </div>
+
+    <!-- آیفون -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
+      <img src="https://img.icons8.com/color/96/000000/ios-logo.png" alt="iOS">
+      <h2 class="text-2xl font-bold mt-4">آیفون (iOS)</h2>
+      <p class="text-gray-400 text-sm mt-2">دریافت از App Store</p>
+      <a href="https://apps.apple.com/app/streisand/id6450534064"
+         class="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg w-full text-center">
+        📥 دانلود
+      </a>
+    </div>
+
+  </main>
+
+  <!-- فوتر -->
+  <footer class="text-center py-6 text-gray-500">
+    ساخته شده توسط <span class="text-blue-400 font-bold">@MahdiAGM0</span>
+  </footer>
+
+</body>
 </html>
