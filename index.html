@@ -1,154 +1,0 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دانلود V2Ray برای همه دستگاه‌ها</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex flex-col">
-
-  <!-- هدر -->
-  <header class="text-center py-8">
-    <h1 class="text-4xl font-extrabold mb-2">دانلود V2Ray</h1>
-    <p class="text-gray-400 mb-2">انتخاب کن و نسخه مناسب دستگاهت رو دانلود کن 🚀</p>
-    <p class="text-gray-400">
-      Telegram: 
-      <a href="https://t.me/Academii73" class="text-blue-400 hover:underline" target="_blank">
-        @Academii73
-      </a>
-    </p>
-  </header>
-
-  <!-- کارت‌ها -->
-  <main class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 max-w-6xl mx-auto">
-
-    <!-- اندروید -->
-    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/000000/android-os.png" alt="اندروید">
-      <h2 class="text-2xl font-bold mt-4">اندروید</h2>
-      <p class="text-gray-400 text-sm mt-2">انتخاب نسخه v2rayNG</p>
-      <button onclick="fetchReleases('android')" 
-              class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full">
-        📋 نمایش نسخه‌ها
-      </button>
-      <div id="android-versions" class="mt-4 text-sm text-gray-300"></div>
-    </div>
-
-    <!-- ویندوز -->
-    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/000000/windows-10.png" alt="ویندوز">
-      <h2 class="text-2xl font-bold mt-4">ویندوز</h2>
-      <p class="text-gray-400 text-sm mt-2">انتخاب نسخه v2rayN</p>
-      <button onclick="fetchReleases('windows')" 
-              class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full">
-        📋 نمایش نسخه‌ها
-      </button>
-      <div id="windows-versions" class="mt-4 text-sm text-gray-300"></div>
-    </div>
-
-    <!-- مک -->
-    <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/000000/mac-os.png" alt="مک">
-      <h2 class="text-2xl font-bold mt-4">مک</h2>
-      <p class="text-gray-400 text-sm mt-2">انتخاب نسخه Qv2ray</p>
-      <button onclick="fetchReleases('mac')" 
-              class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full">
-        📋 نمایش نسخه‌ها
-      </button>
-      <div id="mac-versions" class="mt-4 text-sm text-gray-300"></div>
-    </div>
-
-  </main>
-
-  <!-- فوتر -->
-  <footer class="text-center py-6 text-gray-500">
-    ساخته شده توسط <span class="text-blue-400 font-bold">@MahdiAGM0</span><br>
-    این صفحه آخرین نسخه را از 
-    <a href="https://github.com/2dust/v2rayNG/releases" class="text-blue-400 hover:underline" target="_blank">
-      صفحه ریلیزهای GitHub
-    </a> دریافت می‌کند
-    <div class="mt-4 text-gray-400 text-sm leading-6">
-      📌 <span class="font-bold text-white">راهنمای انتخاب نسخه اندروید:</span><br>
-      ▪️ بیشتر گوشی‌های جدید اندروید (۲۰۱۹ به بعد) از <span class="text-green-400 font-bold">arm64-v8a</span> استفاده می‌کنند.<br>
-      ▪️ گوشی‌های قدیمی‌تر معمولاً <span class="text-yellow-400 font-bold">armeabi-v7a</span> هستند.<br>
-      ▪️ اگر مطمئن نیستید، نسخه <span class="text-blue-400 font-bold">universal</span> را دانلود کنید.<br>
-      🔍 برای فهمیدن دقیق: وارد <span class="text-blue-400">تنظیمات</span> → <span class="text-blue-400">درباره تلفن</span> شوید.<br>
-      اگر باز هم شک داشتید، در تلگرام بپرسید:  
-      <a href="https://t.me/Academii73" class="text-blue-400 hover:underline">@Academii73</a>
-    </div>
-  </footer>
-
-  <!-- اسکریپت دریافت نسخه‌ها -->
-  <script>
-    async function fetchReleases(device) {
-      let repos = {
-        android: "2dust/v2rayNG",
-        windows: "2dust/v2rayN",
-        mac: "Qv2ray/Qv2ray"
-      };
-
-      if (!repos[device]) return;
-
-      let url = `https://api.github.com/repos/${repos[device]}/releases`;
-      let container = document.getElementById(`${device}-versions`);
-
-      container.innerHTML = "⏳ در حال دریافت نسخه‌ها...";
-
-      try {
-        let res = await fetch(url);
-        let data = await res.json();
-
-        let html = "";
-        data.slice(0, 5).forEach((release, idx) => {
-          let version = release.tag_name;
-          let assets = release.assets;
-
-          // فیلتر فایل‌ها
-          if (device === "windows") {
-            assets = assets.filter(asset => asset.name.endsWith(".zip"));
-          }
-          if (device === "android") {
-            assets = assets.filter(asset =>
-              asset.name.includes("arm64-v8a") ||
-              asset.name.includes("armeabi-v7a") ||
-              asset.name.includes("universal")
-            );
-          }
-
-          if (assets.length > 0) {
-            html += `
-              <div class="bg-gray-700 p-3 my-2 rounded">
-                <h3 class="font-bold mb-2">${version}</h3>
-                <select id="${device}-select-${idx}" class="text-black p-1 rounded w-full mb-2">`;
-
-            assets.forEach(asset => {
-              html += `<option value="${asset.browser_download_url}">${asset.name}</option>`;
-            });
-
-            html += `</select>
-                <button onclick="downloadSelected('${device}-select-${idx}')" 
-                        class="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-white w-full">
-                  📥 دانلود
-                </button>
-              </div>`;
-          }
-        });
-
-        container.innerHTML = html;
-      } catch (e) {
-        container.innerHTML = "❌ خطا در دریافت نسخه‌ها";
-      }
-    }
-
-    function downloadSelected(selectId) {
-      let select = document.getElementById(selectId);
-      let url = select.value;
-      if (url) {
-        window.location.href = url;
-      }
-    }
-  </script>
-
-</body>
-</html>
